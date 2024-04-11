@@ -1,0 +1,16 @@
+{
+  "name": "oba",
+  "module": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.js",
+    "dev": "NODE_ENV=development bun build src/index.js --outdir ./build --entry-naming [dir]/dev.[ext] --watch",
+    "build": "bun build src/index.js --outdir ./build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
