@@ -1,4 +1,4 @@
-export function getTime(time) {
+export function getTime(time: number) {
   const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return new Date(time).toLocaleTimeString("en-US", {
@@ -7,6 +7,6 @@ export function getTime(time) {
   });
 }
 
-export function getMinutesTil(time) {
+export function getMinutesTil(time: number) {
   return Math.ceil((time - Date.now()) / (1000 * 60));
 }

@@ -1,16 +1,21 @@
 {
-  "name": "oba",
-  "module": "src/index.js",
-  "type": "module",
-  "scripts": {
-    "start": "bun run src/index.js",
-    "dev": "NODE_ENV=development bun build src/index.js --outdir ./build --entry-naming [dir]/dev.[ext] --watch",
-    "build": "bun build src/index.js --outdir ./build"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  }
+	"name": "oba",
+	"module": "src/index.js",
+	"type": "module",
+	"version": "0.1.0",
+	"scripts": {
+		"start": "bun run src/index.ts",
+		"dev": "NODE_ENV=development bun build src/index.js --outdir ./build --entry-naming [dir]/dev.[ext] --watch",
+		"build": "bun build src/index.js --outdir ./build --entry-naming [dir]/oba.[ext] && bun run scripts/dist.ts"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/scriptable-ios": "^1.7.7"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"geolib": "^3.3.4"
+	}
 }
