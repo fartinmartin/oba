@@ -8,16 +8,15 @@ User defines their commute as JSON in their iCloud drive (will eventually build 
 
 ## TODOs
 
-- Monorepo
-  - Web UI for options JSON
-  - OBA script
+- Monorepo, with additional package for options JSON web UI
 - Abstract this repo as a more general Scriptable dev setup
 - Additional widget sizes?
 
 ## Links
-- https://docs.scriptable.app/
+
 - https://www.soundtransit.org/help-contacts/business-information/open-transit-data-otd
 - https://developer.onebusaway.org/api/where/methods
-- https://bun.sh/docs
+- https://docs.scriptable.app/
 - https://github.com/schl3ck/ios-scriptable-types/tree/master/example
 - https://gitlab.com/sillium-scriptable-projects/universal-scriptable-widget/
+- https://bun.sh/docs
