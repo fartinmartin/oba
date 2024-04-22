@@ -16,10 +16,10 @@ import * as commute from "./lib/commute";
 import * as ui from "./lib/ui";
 import { map } from "./lib/async";
 import {
-  getNearestStop,
-  getRouteArrivals,
-  getRouteDetails,
   getStopDetails,
+  getRouteDetails,
+  getRouteArrivals,
+  getNearestStop,
 } from "./lib/oba";
 
 async function main() {
@@ -38,6 +38,7 @@ async function main() {
     const arrivals = await getRouteArrivals(stop.id, tripStop.routeID);
 
     ui.renderCommute({
+      lastUpdate: new Date().getTime(),
       commute: data.commute,
       stop,
       route,
@@ -45,7 +46,8 @@ async function main() {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    ui.renderError(message);
+    const code = (error as any).code ? `[${(error as any).code}] ` : "";
+    ui.renderError(`${code}${message}`);
   }
 }
 

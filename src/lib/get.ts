@@ -1,6 +1,6 @@
 import { retry } from "./async";
-import type Cache from "./cache.js";
-import { key, root } from "./macros.js" with { type: "macro" };
+import type Cache from "./cache";
+import { key, root } from "./macros" with { type: "macro" };
 
 type CachedOptions<T> = {
   cache: Cache;

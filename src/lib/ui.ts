@@ -1,7 +1,78 @@
 export * as ui from "./ui";
+
 import type { Commute } from "./commute";
-import { getETA, type Arrival, type Route, type Stop } from "./oba";
+import type { Arrival, Route, Stop } from "./oba";
+import { getETA } from "./oba";
 import { getMinutesTil, getTime } from "./time";
+
+type RenderData = {
+  commute: Commute;
+  stop: Stop;
+  route: Route;
+  arrivals: Arrival[];
+  lastUpdate: number;
+};
+
+export function renderCommute({
+  commute,
+  stop,
+  route,
+  arrivals,
+  lastUpdate,
+}: RenderData) {
+  buildUI((widget) => {
+    const mainStack = widget;
+
+    const headerStack = mainStack.addStack();
+    headerStack.centerAlignContent();
+    headerStack.layoutHorizontally();
+
+    sb(headerStack, commute.name.toUpperCase(), 14).textOpacity = 0.5;
+    headerStack.addSpacer();
+    rg(headerStack, getTime(lastUpdate), 14).textOpacity = 0.25;
+
+    const routeStack = mainStack.addStack();
+    routeStack.centerAlignContent();
+    routeStack.layoutHorizontally();
+
+    bd(routeStack, route.shortName, 20);
+    routeStack.addSpacer();
+    mono(routeStack, getProgress(stop.id, commute.trip), 10).textOpacity = 0.25;
+
+    mainStack.addSpacer();
+
+    const arrivalStack = mainStack.addStack();
+    arrivalStack.spacing = 4;
+    arrivalStack.layoutVertically();
+
+    let opacity = 1.35;
+    arrivals.forEach((a) => {
+      const eta = getETA(a);
+      const tag = a.predicted ? "" : "*";
+      const text = `${getTime(eta)}${tag}`;
+
+      const stack = arrivalStack.addStack();
+      stack.backgroundColor = Color.dynamic(
+        new Color("f2f2f7"),
+        new Color("2c2c2e"),
+      );
+      stack.cornerRadius = 4;
+      stack.setPadding(4, 6, 4, 6);
+
+      opacity -= 0.35;
+      md(stack, text, 14).textOpacity = opacity;
+      stack.addSpacer();
+      rg(stack, getMinutesTil(eta).toString(), 14).textOpacity = opacity / 2;
+    });
+  });
+}
+
+function getProgress(stopID: string, trip: Commute["trip"]): string {
+  const index = trip.findIndex((trip) => trip.stopID === stopID);
+  return trip.map((_trip, i) => (i <= index ? "◆" : "◇")).join("─");
+}
+
+//
 
 export function renderError(message: string) {
   buildUI((widget) => {
@@ -9,28 +80,7 @@ export function renderError(message: string) {
   });
 }
 
-type RenderData = {
-  commute: Commute;
-  stop: Stop;
-  route: Route;
-  arrivals: Arrival[];
-};
-
-export function renderCommute({ commute, stop, route, arrivals }: RenderData) {
-  buildUI((widget) => {
-    widget.addText(commute.name);
-    widget.addText(stop.name);
-    widget.addText(route.shortName);
-    widget.addText(route.color);
-    widget.addText(route.textColor);
-    arrivals.forEach((a) => {
-      const eta = getETA(a);
-      const tag = a.predicted ? "" : "*";
-      const min = getMinutesTil(eta);
-      widget.addText(`${getTime(eta)}${tag} ${min}min`);
-    });
-  });
-}
+//
 
 function buildUI(build: (widget: ListWidget) => void) {
   const widget = new ListWidget();
@@ -40,4 +90,36 @@ function buildUI(build: (widget: ListWidget) => void) {
   Script.complete();
 
   widget.presentSmall();
+}
+
+//
+
+function rg(ctx: ListWidget | WidgetStack, text: string, size: number) {
+  const _text = ctx.addText(text);
+  _text.font = Font.regularSystemFont(size);
+  return _text;
+}
+
+function sb(ctx: ListWidget | WidgetStack, text: string, size: number) {
+  const _text = ctx.addText(text);
+  _text.font = Font.semiboldSystemFont(size);
+  return _text;
+}
+
+function md(ctx: ListWidget | WidgetStack, text: string, size: number) {
+  const _text = ctx.addText(text);
+  _text.font = Font.mediumSystemFont(size);
+  return _text;
+}
+
+function bd(ctx: ListWidget | WidgetStack, text: string, size: number) {
+  const _text = ctx.addText(text);
+  _text.font = Font.boldSystemFont(size);
+  return _text;
+}
+
+function mono(ctx: ListWidget | WidgetStack, text: string, size: number) {
+  const _text = ctx.addText(text);
+  _text.font = Font.regularMonospacedSystemFont(size);
+  return _text;
 }

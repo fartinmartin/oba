@@ -40,9 +40,7 @@ export default class Cache {
       const expInMs = exp * (10000 * 6);
 
       if (elapsed > expInMs) {
-        console.log(
-          `[cache:${this.name}] expired, removing: ${io.clean(path)}`,
-        );
+        console.log(`[cache:${this.name}] expired, removing: ${io.clean(path)}`); // prettier-ignore
         this.fm.remove(path);
         return null;
       }
