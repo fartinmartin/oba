@@ -17,6 +17,7 @@ User defines their commute as JSON in their iCloud drive (will eventually build 
 ## Links
 - https://docs.scriptable.app/
 - https://www.soundtransit.org/help-contacts/business-information/open-transit-data-otd
+- https://developer.onebusaway.org/api/where/methods
 - https://bun.sh/docs
 - https://github.com/schl3ck/ios-scriptable-types/tree/master/example
 - https://gitlab.com/sillium-scriptable-projects/universal-scriptable-widget/
