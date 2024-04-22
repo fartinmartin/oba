@@ -60,9 +60,9 @@ export function renderCommute({
       stack.setPadding(4, 6, 4, 6);
 
       opacity -= 0.35;
-      md(stack, text, 14).textOpacity = opacity;
+      monoMD(stack, text, 14).textOpacity = opacity;
       stack.addSpacer();
-      rg(stack, getMinutesTil(eta).toString(), 14).textOpacity = opacity / 2;
+      mono(stack, getMinutesTil(eta).toString(), 14).textOpacity = opacity / 2;
     });
   });
 }
@@ -76,7 +76,7 @@ function getProgress(stopID: string, trip: Commute["trip"]): string {
 
 export function renderError(message: string) {
   buildUI((widget) => {
-    widget.addText(message);
+    mono(widget, message, 12);
   });
 }
 
@@ -121,5 +121,11 @@ function bd(ctx: ListWidget | WidgetStack, text: string, size: number) {
 function mono(ctx: ListWidget | WidgetStack, text: string, size: number) {
   const _text = ctx.addText(text);
   _text.font = Font.regularMonospacedSystemFont(size);
+  return _text;
+}
+
+function monoMD(ctx: ListWidget | WidgetStack, text: string, size: number) {
+  const _text = ctx.addText(text);
+  _text.font = Font.mediumMonospacedSystemFont(size);
   return _text;
 }

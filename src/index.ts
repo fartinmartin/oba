@@ -45,9 +45,10 @@ async function main() {
       arrivals: arrivals.slice(0, 3),
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    const code = (error as any).code ? `[${(error as any).code}] ` : "";
-    ui.renderError(`${code}${message}`);
+    let message = error instanceof Error ? error.message : String(error);
+    if (message.includes("kCLErrorDomain error 1"))
+      message = `Could not get location.\nTap to refresh.`;
+    ui.renderError(message);
   }
 }
 
