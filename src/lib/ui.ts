@@ -47,20 +47,19 @@ export function renderCommute({
 
     let opacity = 1.35;
     arrivals.forEach((a) => {
-      const eta = getETA(a);
-      const tag = a.predicted ? "" : "*";
-      const text = `${getTime(eta)}${tag}`;
-
       const stack = arrivalStack.addStack();
+      stack.setPadding(4, 6, 4, 6);
+      stack.cornerRadius = 4;
       stack.backgroundColor = Color.dynamic(
         new Color("f2f2f7"),
         new Color("2c2c2e"),
       );
-      stack.cornerRadius = 4;
-      stack.setPadding(4, 6, 4, 6);
 
-      opacity -= 0.35;
-      monoMD(stack, text, 14).textOpacity = opacity;
+      const eta = getETA(a);
+      const tag = a.predicted ? "" : "*";
+      const text = `${getTime(eta)}${tag}`;
+
+      monoMD(stack, text, 14).textOpacity = opacity -= 0.35;
       stack.addSpacer();
       mono(stack, getMinutesTil(eta).toString(), 14).textOpacity = opacity / 2;
     });
