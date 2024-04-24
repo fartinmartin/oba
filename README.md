@@ -1,6 +1,6 @@
 <img src="https://github.com/fartinmartin/oba/blob/master/assets/screenshot.jpg?raw=true" alt="widget screenshot" width="350" />
 
-# OneBusAway Scriptable Widget
+# OneBusAway Scriptable iOS Widget
 
 Displays the next 3 arrivals of your route at the stop in your commute that you are nearest to.
 
@@ -9,8 +9,8 @@ User defines their commute as JSON in their iCloud drive (will eventually build 
 ## TODOs
 
 - Monorepo, with additional package for options JSON web UI
+- Additional double wide widget size (would show timing for next connection)
 - Abstract this repo as a more general Scriptable dev setup
-- Additional widget sizes?
 
 ## Links
 
