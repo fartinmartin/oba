@@ -40,7 +40,11 @@ export async function get(route: string, id: string, params?: any) {
 const KEY = key() as string;
 const ROOT = root() as string;
 
-async function http(route: string, id: string, params?: any) {
+async function http(
+  route: string,
+  id: string,
+  params?: Record<string, string>,
+) {
   const url = `${ROOT}/${route}/${id}.json?${getParams(params)}`;
 
   const request = new Request(url);
@@ -56,6 +60,7 @@ async function http(route: string, id: string, params?: any) {
 
 function getParams(params?: any) {
   if (params) {
+    // TODO: URLSearchParams does not exist in Scriptable land
     const _ = new URLSearchParams();
     _.append("key", KEY);
     for (const key in params) _.append(key, params[key]);

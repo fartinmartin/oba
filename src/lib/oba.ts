@@ -27,7 +27,7 @@ export async function getRouteDetails(routeID: string) {
   });
 }
 
-//
+// oba:arrivals
 
 export async function getArrivals(stopID: string) {
   return await cached<Arrival[]>({
@@ -37,8 +37,6 @@ export async function getArrivals(stopID: string) {
     transform: (data) => data.entry.arrivalsAndDepartures,
   });
 }
-
-// oba:arrivals
 
 export async function getRouteArrivals(stopID: string, routeID: string) {
   const arrivals = await getArrivals(stopID);
@@ -64,7 +62,7 @@ export async function getNearestStop(stops: Stop[]) {
   return findNearest(location, stops) as Stop;
 }
 
-//
+// oba:types
 
 export type Stop = {
   id: string;
@@ -104,11 +102,11 @@ export type Arrival = {
   departureEnabled: boolean;
   scheduledArrivalTime: number;
   scheduledDepartureTime: number;
-  frequency: any; // Type definition needed
+  frequency: any;
   predicted: boolean;
   predictedArrivalTime: number;
   predictedDepartureTime: number;
   distanceFromStop: number;
   numberOfStopsAway: number;
-  tripStatus: any; // Type definition needed
+  tripStatus: any;
 };

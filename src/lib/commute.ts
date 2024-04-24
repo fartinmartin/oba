@@ -3,10 +3,11 @@ import * as io from "./io";
 
 export type Commute = {
   name: string;
-  trip: Stop[];
+  trip: Leg[];
+  return: Leg[];
 };
 
-type Stop = {
+type Leg = {
   routeID: string;
   stopID: string;
 };

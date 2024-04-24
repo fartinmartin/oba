@@ -1,5 +1,6 @@
 export * as ui from "./ui";
 
+import { isEqual } from "./async";
 import type { Commute } from "./commute";
 import type { Arrival, Route, Stop } from "./oba";
 import { getETA } from "./oba";
@@ -7,6 +8,7 @@ import { getMinutesTil, getTime } from "./time";
 
 type RenderData = {
   commute: Commute;
+  trip: Commute["trip"];
   stop: Stop;
   route: Route;
   arrivals: Arrival[];
@@ -15,6 +17,7 @@ type RenderData = {
 
 export function renderCommute({
   commute,
+  trip,
   stop,
   route,
   arrivals,
@@ -27,7 +30,7 @@ export function renderCommute({
     headerStack.centerAlignContent();
     headerStack.layoutHorizontally();
 
-    sb(headerStack, commute.name.toUpperCase(), 14).textOpacity = 0.5;
+    sb(headerStack, getName(commute, trip), 14).textOpacity = 0.5;
     headerStack.addSpacer();
     rg(headerStack, getTime(lastUpdate), 14).textOpacity = 0.25;
 
@@ -37,7 +40,7 @@ export function renderCommute({
 
     bd(routeStack, route.shortName, 20);
     routeStack.addSpacer();
-    mono(routeStack, getProgress(stop.id, commute.trip), 10).textOpacity = 0.25;
+    mono(routeStack, getProgress(stop.id, trip), 10).textOpacity = 0.25;
 
     mainStack.addSpacer();
 
@@ -66,6 +69,12 @@ export function renderCommute({
   });
 }
 
+function getName(commute: Commute, trip: Commute["trip"]): string {
+  const to = isEqual(trip, commute.trip) ? true : false;
+  const prefix = to ? "→ " : "← ";
+  return prefix + commute.name.toUpperCase();
+}
+
 function getProgress(stopID: string, trip: Commute["trip"]): string {
   const index = trip.findIndex((trip) => trip.stopID === stopID);
   return trip.map((_trip, i) => (i <= index ? "◆" : "◇")).join("─");
@@ -75,7 +84,7 @@ function getProgress(stopID: string, trip: Commute["trip"]): string {
 
 export function renderError(message: string) {
   buildUI((widget) => {
-    mono(widget, message, 12);
+    md(widget, message, 14).centerAlignText();
   });
 }
 
